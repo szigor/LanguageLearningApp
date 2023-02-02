@@ -2,12 +2,17 @@ package me.igor.LanguageLearningApp.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import me.igor.LanguageLearningApp.model.Difficulty;
+import me.igor.LanguageLearningApp.model.Type;
 import me.igor.LanguageLearningApp.model.Word;
 import me.igor.LanguageLearningApp.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -24,6 +29,26 @@ public class WordService {
 
     public List<Word> getAllWords() {
         return wordRepository.findAll();
+    }
+
+    public Word getRandomWord() {
+        return wordRepository.findAll().get(new Random().nextInt(wordRepository.findAll().size()));
+    }
+
+    public List<Word> getByType(Type type) {
+        List<Word> filteredWords = wordRepository.findAll().stream()
+                .filter(w -> w.getType() == type)
+                .collect(Collectors.toList());
+        Collections.shuffle(filteredWords);
+        return  filteredWords;
+    }
+
+    public List<Word> getByDifficulty(Difficulty difficulty) {
+        List<Word> filteredWords = wordRepository.findAll().stream()
+                .filter(w -> w.getDifficulty() == difficulty)
+                .collect(Collectors.toList());
+        Collections.shuffle(filteredWords);
+        return  filteredWords;
     }
 
 }
