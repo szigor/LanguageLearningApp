@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -29,6 +30,11 @@ public class WordService {
 
     public List<Word> getAllWords() {
         return wordRepository.findAll();
+    }
+
+    public List<Word> getDictionary() {
+        return wordRepository.findAll().stream()
+                .sorted(Comparator.comparing(Word::getEng)).toList();
     }
 
     public List<Word> getAllWordsShuffled() {

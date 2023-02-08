@@ -25,4 +25,8 @@ export class WordsDataService {
     return this.http.get<Array<Word>>('http://localhost:8080/words/shuffled')
   }
 
+  getDictionary() {
+    return this.http.get<Array<Word>>('http://localhost:8080/dictionary')
+  }
+
 }

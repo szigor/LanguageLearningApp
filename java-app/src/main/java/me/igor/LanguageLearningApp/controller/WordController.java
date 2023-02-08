@@ -22,6 +22,11 @@ public class WordController {
         return wordService.getAllWords();
     }
 
+    @GetMapping(path = "/dictionary")
+    public List<Word> getDictionary() {
+        return wordService.getDictionary();
+    }
+
     @GetMapping(path = "/words/shuffled")
     public List<Word> getAllWordsShuffled() {
         return wordService.getAllWordsShuffled();
