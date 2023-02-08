@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-//@CrossOrigin(origins = "http://localhost:4200")
+@CrossOrigin(origins = "http://localhost:4200")
 public class WordController {
 
     @Autowired
@@ -20,6 +20,11 @@ public class WordController {
     @GetMapping(path = "/words")
     public List<Word> getAllWords() {
         return wordService.getAllWords();
+    }
+
+    @GetMapping(path = "/words/shuffled")
+    public List<Word> getAllWordsShuffled() {
+        return wordService.getAllWordsShuffled();
     }
 
     @GetMapping(path = "/word/random")

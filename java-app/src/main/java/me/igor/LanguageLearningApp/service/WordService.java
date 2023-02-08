@@ -31,6 +31,12 @@ public class WordService {
         return wordRepository.findAll();
     }
 
+    public List<Word> getAllWordsShuffled() {
+        List<Word> all = wordRepository.findAll();
+        Collections.shuffle(all);
+        return all;
+    }
+
     public Word getRandomWord() {
         return wordRepository.findAll().get(new Random().nextInt(wordRepository.findAll().size()));
     }
