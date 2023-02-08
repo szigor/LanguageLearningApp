@@ -1,0 +1,12 @@
+.word {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif, Courier, monospace, Helvetica, sans-serif;
+    font-size: x-large;
+}
+
+.hint {
+    color: grey;
+    font-style: italic;
+}
+
