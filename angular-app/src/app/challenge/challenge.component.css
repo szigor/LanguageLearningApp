@@ -10,3 +10,36 @@
     font-style: italic;
 }
 
+.hiddenWord {
+    font-size: xx-large;
+    /* font-weight: bold; */
+}
+
+.correct {
+    background-color: lightgreen;
+    animation: flash1 0.1s;
+}
+
+@keyframes flash1 {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: lightgreen;
+    }
+}
+
+.incorrect {
+    background-color: lightcoral;
+    animation: flash2 0.1s;
+}
+
+@keyframes flash2 {
+    from {
+        background-color: transparent;
+    }
+    to {
+        background-color: lightcoral;
+    }
+}
+

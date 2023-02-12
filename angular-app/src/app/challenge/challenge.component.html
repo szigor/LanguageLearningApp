@@ -1,8 +1,9 @@
 <div class="container text-center mt-5 mb-5" *ngIf="isPlaying">
     <p class="word">{{wordToGuess.pl}}</p>
-    <p class="hint" *ngIf="hint">{{wordToGuess.engUsage}}</p>
+    <p class="hiddenWord" *ngIf="!wrong">{{showWordWithSpaces(wordHidden)}}</p>
+    <p class="hiddenWord" *ngIf="wrong">{{showWordWithSpaces(wordToGuess.eng)}}</p>
     <div class="form-group col-2 mx-auto">
-        <input class="form-control" type="text" [(ngModel)]="enteredWord" (keyup.enter)="checkWord()"
+        <input class="form-control" type="text" #inputField [(ngModel)]="enteredWord" (keyup.enter)="checkWord()"
             (keyup.esc)="endGame()" (keyup.control)="giveHint()">
     </div>
     <!-- <button (click)="checkWord()">Check</button> -->
