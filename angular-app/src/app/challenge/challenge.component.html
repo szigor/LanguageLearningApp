@@ -6,37 +6,15 @@
         <input class="form-control" type="text" #inputField [(ngModel)]="enteredWord" (keyup.enter)="checkWord()"
             (keyup.esc)="endGame()" (keyup.control)="giveHint()">
     </div>
-    <!-- <button (click)="checkWord()">Check</button> -->
     <div class="mt-3">
         <p>{{percentage}}%</p>
+    </div>
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" [style.--percentage]="percentage + '%'"></div>
     </div>
 </div>
 <div class="container text-center mt-5 mb-5" *ngIf="!isPlaying">
     <div class="mt-3">
-        <p>Your scrore is {{percentage}}%</p>
+        <p>Your score is {{percentage}}%</p>
     </div>
-</div>
-<div class="container text-center mt-5">
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th>pl</th>
-                <th>eng</th>
-                <th>engUsage</th>
-                <!-- <th>type</th> -->
-                <!-- <th>diff</th> -->
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let word of words; let i = index">
-                <th>{{i + 1}}.</th>
-                <td>{{word.pl}}</td>
-                <td>{{word.eng}}</td>
-                <td>{{word.engUsage}}</td>
-                <!-- <td>{{word.type}}</td> -->
-                <!-- <td>{{word.difficulty}}</td> -->
-            </tr>
-        </tbody>
-    </table>
 </div>

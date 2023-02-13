@@ -206,6 +206,6 @@ INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('gruz', 'rubble'
 INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('odosobnić', 'seclude', 'The writer decided to seclude himself in the countryside to work on his new book.', 'VERB', 'HARD');
 INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('na bok', 'sideways', 'The car spun sideways and hit the tree.', 'ADVERB', 'HARD');
 INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('płakać', 'sob', 'The child was sobbing uncontrollably after losing her teddy bear.', 'VERB', 'HARD');
-INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('tristan', 'sober', 'After a night of heavy drinking, he was unable to walk in a sober manner.', 'ADJECTIVE', 'HARD');
+INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('trzeźwy', 'sober', 'After a night of heavy drinking, he was unable to walk in a sober manner.', 'ADJECTIVE', 'HARD');
 INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('plamka', 'speck', 'The speck of dirt on the lens made it difficult to take a clear photo.', 'NOUN', 'HARD');
 INSERT INTO word (pl, eng, eng_usage, type, difficulty) VALUES ('wychowanie', 'upbringing', 'Her strict upbringing made her very disciplined and organized.', 'NOUN', 'HARD');

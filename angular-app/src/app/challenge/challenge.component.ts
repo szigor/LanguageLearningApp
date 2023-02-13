@@ -61,6 +61,8 @@ export class ChallengeComponent implements OnInit {
         this.wordToGuess = this.words[++this.counter]
         this.fillWordWithUnderscore(this.wordToGuess.eng.length)
         this.fillPossibleNumbers(this.wordToGuess.eng)
+        ++this.answersCounter
+        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
       }, 200)
     } else {
       // WRONG
@@ -72,6 +74,8 @@ export class ChallengeComponent implements OnInit {
         this.wordToGuess = this.words[++this.counter]
         this.fillWordWithUnderscore(this.wordToGuess.eng.length)
         this.fillPossibleNumbers(this.wordToGuess.eng)
+        ++this.answersCounter
+        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
       }, 200)
     }
     // this.wrong = false
@@ -80,8 +84,8 @@ export class ChallengeComponent implements OnInit {
 
     this.hintCounter = 0
     this.enteredWord = ''
-    ++this.answersCounter
-    this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
+    // ++this.answersCounter
+    // this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
   }
 
   endGame() {
