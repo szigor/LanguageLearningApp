@@ -63,7 +63,7 @@ export class ChallengeComponent implements OnInit {
         this.fillPossibleNumbers(this.wordToGuess.eng)
         ++this.answersCounter
         this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
-      }, 200)
+      }, 500)
     } else {
       // WRONG
       this.wrong = true
@@ -76,7 +76,7 @@ export class ChallengeComponent implements OnInit {
         this.fillPossibleNumbers(this.wordToGuess.eng)
         ++this.answersCounter
         this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
-      }, 200)
+      }, 500)
     }
     // this.wrong = false
     // let nextWord = this.words[++this.counter]
