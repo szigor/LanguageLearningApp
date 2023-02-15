@@ -10,6 +10,10 @@ export class ChallengeComponent implements OnInit {
 
   @ViewChild('inputField') inputField!: ElementRef
 
+  @ViewChild('roundSelect') roundSelect!: ElementRef;
+  @ViewChild('partSelect') partSelect!: ElementRef;
+  @ViewChild('difficultySelect') difficultySelect!: ElementRef;
+
   words: Array<Word> = []
   wordToGuess: Word = new Word(-1, 'test', 'test', 'test', 'test', 'test')
   enteredWord!: string
@@ -23,8 +27,14 @@ export class ChallengeComponent implements OnInit {
   wordHidden = ''
   possibleNumbers: Array<number> = []
   hintCounter = 0
-
   wrong = false
+
+  rounds = [10, 25, 50, 100]
+  partsOfSpeech = ['Nouns', 'Verbs', 'Adjectives', 'Adverbs']
+  difficulties = ['Easy', 'Medium', 'Hard']
+
+  start = false;
+
 
   constructor(
     private service: WordsDataService
@@ -47,6 +57,15 @@ export class ChallengeComponent implements OnInit {
         }
       )
     })
+  }
+
+  startGame() {
+    this.start = true
+
+    const round = this.roundSelect.nativeElement.value;
+    const part = this.partSelect.nativeElement.value;
+    const difficulty = this.difficultySelect.nativeElement.value;
+
   }
 
   checkWord() {

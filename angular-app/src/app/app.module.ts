@@ -9,6 +9,7 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { FormsModule } from '@angular/forms';
 import { ChallengeComponent } from './challenge/challenge.component';
 import { DictionaryComponent } from './dictionary/dictionary.component';
+import { StudyComponent } from './study/study.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DictionaryComponent } from './dictionary/dictionary.component';
     HomePageComponent,
     ChallengeComponent,
     DictionaryComponent,
+    StudyComponent,
   ],
   imports: [
     BrowserModule,
