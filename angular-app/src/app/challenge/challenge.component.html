@@ -31,7 +31,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="form-floating">
                 <select class="form-select" id="partSelect" aria-label="Part select" #partSelect>
-                    <option *ngFor="let part of partsOfSpeech" value="{{part}}">{{part}}</option>
+                    <option *ngFor="let part of partsOfSpeech" value="{{part}}">{{part}}s</option>
                 </select>
                 <label for="partSelect">Part of speech:</label>
             </div>
@@ -41,7 +41,8 @@
         <div class="col-md-6 offset-md-3">
             <div class="form-floating">
                 <select class="form-select" id="difficultySelect" aria-label="Difficulty select" #difficultySelect>
-                    <option *ngFor="let diff of difficulties" value="{{diff}}">{{diff}}</option>
+                    <option *ngFor="let diff of difficulties" value="{{diff}}"
+                        [disabled]="diff === 'Easy' || diff === 'Medium'">{{diff}}</option>
                 </select>
                 <label for="difficultySelect">Difficulty:</label>
             </div>

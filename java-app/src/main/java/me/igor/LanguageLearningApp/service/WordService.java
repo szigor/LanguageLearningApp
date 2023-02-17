@@ -9,10 +9,7 @@ import me.igor.LanguageLearningApp.repository.WordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -61,6 +58,24 @@ public class WordService {
                 .collect(Collectors.toList());
         Collections.shuffle(filteredWords);
         return  filteredWords;
+    }
+
+    public List<Word> getBy(Integer round, String part, String diff) {
+
+        List<Word> result;
+
+        if (!part.equals("all")) {
+            result = getAllWordsShuffled().stream()
+                    .filter(w -> w.getDifficulty().name().equals(diff.toUpperCase()) && w.getType().name().equals(part.toUpperCase()))
+                    .limit(round)
+                    .collect(Collectors.toList());
+        } else {
+            result = getAllWordsShuffled().stream()
+                    .filter(w -> w.getDifficulty().name().equals(diff.toUpperCase()))
+                    .limit(round)
+                    .collect(Collectors.toList());
+        }
+        return result;
     }
 
 }

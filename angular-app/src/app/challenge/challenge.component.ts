@@ -29,9 +29,9 @@ export class ChallengeComponent implements OnInit {
   hintCounter = 0
   wrong = false
 
-  rounds = [10, 25, 50, 100]
-  partsOfSpeech = ['Nouns', 'Verbs', 'Adjectives', 'Adverbs']
-  difficulties = ['Easy', 'Medium', 'Hard']
+  rounds = [10, 25, 50]
+  partsOfSpeech = ['Noun', 'Verb', 'Adjective']
+  difficulties = ['Hard', 'Medium', 'Easy']
 
   start = false;
 
@@ -40,13 +40,18 @@ export class ChallengeComponent implements OnInit {
     private service: WordsDataService
   ) { }
 
-  async ngOnInit(): Promise<void> {
-    await this.getAllWords();
-    let firstWord = this.words[0]
-    this.wordToGuess = firstWord
-    this.fillWordWithUnderscore(firstWord.eng.length)
-    this.fillPossibleNumbers(firstWord.eng)
+
+  ngOnInit(): void {
+    console.log('-----OnInit-----')
   }
+
+  // async ngOnInit(): Promise<void> {
+  //   await this.getAllWords();
+  //   let firstWord = this.words[0]
+  //   this.wordToGuess = firstWord
+  //   this.fillWordWithUnderscore(firstWord.eng.length)
+  //   this.fillPossibleNumbers(firstWord.eng)
+  // }
 
   getAllWords(): Promise<void> {
     return new Promise((resolve) => {
@@ -59,12 +64,31 @@ export class ChallengeComponent implements OnInit {
     })
   }
 
-  startGame() {
-    this.start = true
+  getWords(rounds: number, part: String, difficulty: String): Promise<void> {
+    return new Promise((resolve) => {
+      this.service.getWords(rounds, part, difficulty).subscribe(
+        response => {
+          this.words = response
+          resolve()
+        }
+      )
+    })
+  }
 
-    const round = this.roundSelect.nativeElement.value;
-    const part = this.partSelect.nativeElement.value;
-    const difficulty = this.difficultySelect.nativeElement.value;
+  async startGame(): Promise<void> {
+
+    await this.getWords(
+      this.roundSelect.nativeElement.value,
+      this.partSelect.nativeElement.value,
+      this.difficultySelect.nativeElement.value
+    );
+
+    let firstWord = this.words[0]
+    this.wordToGuess = firstWord
+    this.fillWordWithUnderscore(firstWord.eng.length)
+    this.fillPossibleNumbers(firstWord.eng)
+
+    this.start = true
 
   }
 
@@ -77,12 +101,17 @@ export class ChallengeComponent implements OnInit {
         this.inputField.nativeElement.classList.remove('correct')
         this.wrong = false
         ++this.correctCounter
+        ++this.answersCounter
+        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
+        if(this.answersCounter === this.words.length) {
+          this.endGame()
+          return
+        }
         this.wordToGuess = this.words[++this.counter]
         this.fillWordWithUnderscore(this.wordToGuess.eng.length)
         this.fillPossibleNumbers(this.wordToGuess.eng)
-        ++this.answersCounter
-        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
       }, 500)
+      
     } else {
       // WRONG
       this.wrong = true
@@ -90,21 +119,22 @@ export class ChallengeComponent implements OnInit {
       setTimeout(() => {
         this.inputField.nativeElement.classList.remove('incorrect')
         this.wrong = false
+        ++this.answersCounter
+        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
+        if(this.answersCounter === this.words.length) {
+          this.endGame()
+          return
+        }
         this.wordToGuess = this.words[++this.counter]
         this.fillWordWithUnderscore(this.wordToGuess.eng.length)
         this.fillPossibleNumbers(this.wordToGuess.eng)
-        ++this.answersCounter
-        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
       }, 500)
+      
     }
-    // this.wrong = false
-    // let nextWord = this.words[++this.counter]
-    // this.wordToGuess = nextWord
 
     this.hintCounter = 0
     this.enteredWord = ''
-    // ++this.answersCounter
-    // this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
+
   }
 
   endGame() {
@@ -154,4 +184,38 @@ export class ChallengeComponent implements OnInit {
   private changeLetterInString(word: string, index: number, newLetter: string) {
     return word.substring(0, index) + newLetter + word.substring(index + 1)
   }
+
+  // get100Nouns(): Promise<void> {
+  //   return new Promise((resolve) => {
+  //     this.service.get100Nouns().subscribe(
+  //       response => {
+  //         this.words = response
+  //         resolve()
+  //       }
+  //     )
+  //   })
+  // }
+
+  // get100Verbs(): Promise<void> {
+  //   return new Promise((resolve) => {
+  //     this.service.get100Verbs().subscribe(
+  //       response => {
+  //         this.words = response
+  //         resolve()
+  //       }
+  //     )
+  //   })
+  // }
+
+  // get100Adjectives(): Promise<void> {
+  //   return new Promise((resolve) => {
+  //     this.service.get100Adjectives().subscribe(
+  //       response => {
+  //         this.words = response
+  //         resolve()
+  //       }
+  //     )
+  //   })
+  // }
+
 }

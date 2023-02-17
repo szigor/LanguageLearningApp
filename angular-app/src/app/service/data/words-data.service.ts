@@ -25,6 +25,10 @@ export class WordsDataService {
     return this.http.get<Array<Word>>('http://localhost:8080/words/shuffled')
   }
 
+  getWords(rounds: number, part: String, difficulty: String) {
+    return this.http.get<Array<Word>>(`http://localhost:8080/words/${rounds}/${part.toLowerCase()}/${difficulty.toLowerCase()}`)
+  }
+
   getDictionary() {
     return this.http.get<Array<Word>>('http://localhost:8080/dictionary')
   }

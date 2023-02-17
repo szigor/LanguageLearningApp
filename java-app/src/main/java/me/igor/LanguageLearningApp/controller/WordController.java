@@ -72,6 +72,12 @@ public class WordController {
         return wordService.getByDifficulty(Difficulty.HARD);
     }
 
+
+    @GetMapping(path = "/words/{round}/{part}/{diff}")
+    public List<Word> get50(@PathVariable Integer round, @PathVariable String part, @PathVariable String diff) {
+        return wordService.getBy(round, part, diff);
+    }
+
     @PostMapping(path = "/word/save")
     public ResponseEntity<Word> saveWord(@RequestBody Word word) {
         wordService.saveWord(word);
