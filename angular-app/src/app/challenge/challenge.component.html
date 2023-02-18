@@ -1,7 +1,7 @@
 <div class="container text-center mt-5 mb-5 game" *ngIf="isPlaying && start">
     <p class="word">{{wordToGuess.pl}}</p>
-    <p class="hiddenWord" *ngIf="!wrong">{{showWordWithSpaces(wordHidden)}}</p>
-    <p class="hiddenWord" *ngIf="wrong">{{showWordWithSpaces(wordToGuess.eng)}}</p>
+    <p class="hiddenWord" *ngIf="!showWord">{{showWordWithSpaces(wordHidden)}}</p>
+    <p class="hiddenWord" *ngIf="showWord">{{showWordWithSpaces(wordToGuess.eng)}}</p>
     <div class="form-group col-2 mx-auto">
         <input class="form-control" type="text" #inputField [(ngModel)]="enteredWord" (keyup.enter)="checkWord()"
             (keyup.esc)="endGame()" (keyup.control)="giveHint()">
@@ -31,6 +31,7 @@
         <div class="col-md-6 offset-md-3">
             <div class="form-floating">
                 <select class="form-select" id="partSelect" aria-label="Part select" #partSelect>
+                    <option value="all">All</option>
                     <option *ngFor="let part of partsOfSpeech" value="{{part}}">{{part}}s</option>
                 </select>
                 <label for="partSelect">Part of speech:</label>
@@ -57,6 +58,20 @@
 
 <div class="container text-center mt-5 mb-5" *ngIf="!isPlaying">
     <div class="mt-3">
+        <h4>Well done!</h4>
         <p>Your score is {{percentage}}%</p>
+        <div class="justify-content-center d-flex">
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" [style.--percentage]="percentage + '%'"></div>
+            </div>
+        </div>
+        <div class="mt-4 align align-items-center d-flex justify-content-center">
+            <div class="px-3">
+                <a routerLink="/" class="px-3 btn btn-primary btn-lg">Menu</a>
+            </div>
+            <div class="px-3">
+                <a href="/challenge" class="px-3 btn btn-success btn-lg">Play again</a>
+            </div>
+        </div>
     </div>
 </div>

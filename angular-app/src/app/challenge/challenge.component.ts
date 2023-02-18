@@ -6,7 +6,7 @@ import { Word, WordsDataService } from '../service/data/words-data.service';
   templateUrl: './challenge.component.html',
   styleUrls: ['./challenge.component.css']
 })
-export class ChallengeComponent implements OnInit {
+export class ChallengeComponent {
 
   @ViewChild('inputField') inputField!: ElementRef
 
@@ -27,11 +27,12 @@ export class ChallengeComponent implements OnInit {
   wordHidden = ''
   possibleNumbers: Array<number> = []
   hintCounter = 0
-  wrong = false
+  showWord = false
 
   rounds = [10, 25, 50]
   partsOfSpeech = ['Noun', 'Verb', 'Adjective']
   difficulties = ['Hard', 'Medium', 'Easy']
+  maxHints = 4
 
   start = false;
 
@@ -39,30 +40,6 @@ export class ChallengeComponent implements OnInit {
   constructor(
     private service: WordsDataService
   ) { }
-
-
-  ngOnInit(): void {
-    console.log('-----OnInit-----')
-  }
-
-  // async ngOnInit(): Promise<void> {
-  //   await this.getAllWords();
-  //   let firstWord = this.words[0]
-  //   this.wordToGuess = firstWord
-  //   this.fillWordWithUnderscore(firstWord.eng.length)
-  //   this.fillPossibleNumbers(firstWord.eng)
-  // }
-
-  getAllWords(): Promise<void> {
-    return new Promise((resolve) => {
-      this.service.getAllWords().subscribe(
-        response => {
-          this.words = response
-          resolve()
-        }
-      )
-    })
-  }
 
   getWords(rounds: number, part: String, difficulty: String): Promise<void> {
     return new Promise((resolve) => {
@@ -93,48 +70,34 @@ export class ChallengeComponent implements OnInit {
   }
 
   checkWord() {
-    if (this.enteredWord === this.wordToGuess.eng) {
-      // CORRECT
-      this.wrong = true
-      this.inputField.nativeElement.classList.add('correct')
-      setTimeout(() => {
-        this.inputField.nativeElement.classList.remove('correct')
-        this.wrong = false
-        ++this.correctCounter
-        ++this.answersCounter
-        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
-        if(this.answersCounter === this.words.length) {
-          this.endGame()
-          return
-        }
-        this.wordToGuess = this.words[++this.counter]
-        this.fillWordWithUnderscore(this.wordToGuess.eng.length)
-        this.fillPossibleNumbers(this.wordToGuess.eng)
-      }, 500)
+    const isCorrect = this.enteredWord.toLowerCase() === this.wordToGuess.eng.toLowerCase();
+  
+    this.showWord = true;
+    this.inputField.nativeElement.classList.add(isCorrect ? 'correct' : 'incorrect');
+    
+    setTimeout(() => {
+      this.inputField.nativeElement.classList.remove(isCorrect ? 'correct' : 'incorrect');
+      this.showWord = false;
+      ++this.answersCounter;
+      this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1);
       
-    } else {
-      // WRONG
-      this.wrong = true
-      this.inputField.nativeElement.classList.add('incorrect')
-      setTimeout(() => {
-        this.inputField.nativeElement.classList.remove('incorrect')
-        this.wrong = false
-        ++this.answersCounter
-        this.percentage = ((this.correctCounter / this.answersCounter) * 100).toFixed(1)
-        if(this.answersCounter === this.words.length) {
-          this.endGame()
-          return
-        }
-        this.wordToGuess = this.words[++this.counter]
-        this.fillWordWithUnderscore(this.wordToGuess.eng.length)
-        this.fillPossibleNumbers(this.wordToGuess.eng)
-      }, 500)
+      if (this.answersCounter === this.words.length) {
+        this.endGame();
+        return;
+      }
       
+      this.wordToGuess = this.words[++this.counter];
+      this.fillWordWithUnderscore(this.wordToGuess.eng.length);
+      this.fillPossibleNumbers(this.wordToGuess.eng);
+      
+      this.hintCounter = 0;
+      this.enteredWord = '';
+    }, 500);
+    
+    if (isCorrect) {
+      this.showWord = true;
+      ++this.correctCounter;
     }
-
-    this.hintCounter = 0
-    this.enteredWord = ''
-
   }
 
   endGame() {
@@ -143,7 +106,7 @@ export class ChallengeComponent implements OnInit {
 
   giveHint() {
     let wordPom = this.wordToGuess.eng
-    if (this.possibleNumbers.length > 0 && this.hintCounter < 4) {
+    if (this.possibleNumbers.length > 0 && this.hintCounter < this.maxHints) {
       let randomNum = this.randomNumberFromArray(this.possibleNumbers)
       this.hintLetter = wordPom[randomNum]
       this.hintLetterPlace = randomNum
@@ -156,10 +119,6 @@ export class ChallengeComponent implements OnInit {
   showWordWithSpaces(word: string) {
     let letters = word.split('')
     return letters.join(' ')
-  }
-
-  private randomNumberFromZeroGenerator(max: number) {
-    return Math.floor(Math.random() * (max - 0 + 1) + 0)
   }
 
   private randomNumberFromArray(arr: Array<number>) {
@@ -184,38 +143,5 @@ export class ChallengeComponent implements OnInit {
   private changeLetterInString(word: string, index: number, newLetter: string) {
     return word.substring(0, index) + newLetter + word.substring(index + 1)
   }
-
-  // get100Nouns(): Promise<void> {
-  //   return new Promise((resolve) => {
-  //     this.service.get100Nouns().subscribe(
-  //       response => {
-  //         this.words = response
-  //         resolve()
-  //       }
-  //     )
-  //   })
-  // }
-
-  // get100Verbs(): Promise<void> {
-  //   return new Promise((resolve) => {
-  //     this.service.get100Verbs().subscribe(
-  //       response => {
-  //         this.words = response
-  //         resolve()
-  //       }
-  //     )
-  //   })
-  // }
-
-  // get100Adjectives(): Promise<void> {
-  //   return new Promise((resolve) => {
-  //     this.service.get100Adjectives().subscribe(
-  //       response => {
-  //         this.words = response
-  //         resolve()
-  //       }
-  //     )
-  //   })
-  // }
 
 }

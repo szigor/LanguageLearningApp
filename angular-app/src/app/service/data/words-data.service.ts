@@ -26,6 +26,7 @@ export class WordsDataService {
   }
 
   getWords(rounds: number, part: String, difficulty: String) {
+    console.log(`http://localhost:8080/words/${rounds}/${part.toLowerCase()}/${difficulty.toLowerCase()}`)
     return this.http.get<Array<Word>>(`http://localhost:8080/words/${rounds}/${part.toLowerCase()}/${difficulty.toLowerCase()}`)
   }
 
